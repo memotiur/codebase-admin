@@ -5377,7 +5377,7 @@
                         clearTimeout(Rr), Rr = setTimeout((() => {
                             e.sparkline()
                         }), 500)
-                    }))) : jQuery(i).addClass("js-sparkline-enabled"), jQuery(i).sparkline(n.data("points") || [0], s)) : console.log("[jQuery Sparkline JS Helper] Please add a correct type (line, bar, pie or tristate) in all your elements with 'js-sparkline' class.")
+                    }))) : jQuery(i).addClass("js-sparkline-enabled"), jQuery(i).sparkline(n.data("points") || [0], s)) : console.log("[jQuery Sparkline JS Helpers] Please add a correct type (line, bar, pie or tristate) in all your elements with 'js-sparkline' class.")
                 }))
             }
 

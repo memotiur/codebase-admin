@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::any('/login', [AdminAuth::class, 'login']);
+Route::any('/forget-password', [AdminAuth::class, 'forgetPassword']);
+Route::any('/reset-password/{id}', [AdminAuth::class, 'resetPassword']);
 
 
 Route::group(['middleware' => 'admin'], function () {

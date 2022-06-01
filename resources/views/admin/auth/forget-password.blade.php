@@ -37,10 +37,10 @@
                             </a>
                             <h1 class="h3 fw-bold mt-4 mb-2">Welcome to {{getPlatformName()}} Dashboard</h1>
                         </div>
-                        <form class="" action="/login" method="POST" enctype="multipart/form-data">
+                        <form class="" action="/forget-password" method="POST" enctype="multipart/form-data">
                             <div class="block block-themed block-rounded block-fx-shadow">
                                 <div class="block-header bg-gd-dusk">
-                                    <h3 class="block-title">Please Sign In</h3>
+                                    <h3 class="block-title">Reset Password</h3>
                                 </div>
                                 <div class="block-content">
                                     <div class="form-floating mb-4">
@@ -49,23 +49,14 @@
                                         <label class="form-label" for="login-username">Email</label>
                                         @csrf
                                     </div>
-                                    <div class="form-floating mb-4">
-                                        <input type="password" class="form-control" id="login-password"
-                                               name="password" placeholder="Enter your password" required>
-                                        <label class="form-label" for="login-password">Password</label>
-                                    </div>
+
                                     <div class="row">
-                                        <div class="col-sm-6 d-sm-flex align-items-center push">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                       id="login-remember-me" name="login-remember-me">
-                                                <label class="form-check-label" for="login-remember-me">Remember
-                                                    Me</label>
-                                            </div>
+                                        <div class="col-sm-2 d-sm-flex align-items-center push">
+
                                         </div>
-                                        <div class="col-sm-6 text-sm-end push">
+                                        <div class="col-sm-10 text-sm-end push">
                                             <button type="submit" class="btn btn-lg btn-alt-primary fw-medium">
-                                                Sign In
+                                                Reset Password
                                             </button>
                                         </div>
                                     </div>
@@ -77,8 +68,8 @@
                                          <i class="fa fa-plus opacity-50 me-1"></i> Create Account
                                      </a>--}}
                                     <a class="fs-sm fw-medium link-fx text-muted me-2 mb-1 d-inline-block"
-                                       href="/forget-password">
-                                        Forgot Password
+                                       href="/login">
+                                        Login to Continue
                                     </a>
                                 </div>
                             </div>
