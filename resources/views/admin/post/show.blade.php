@@ -24,13 +24,12 @@
                 Category <small>Table</small>
 
 
-                <a href="/posts/create" class="btn btn-alt-primary float-end" >
+                <a href="/posts/create" class="btn btn-alt-primary float-end">
                     <i class="fa fa-plus"></i> New
                 </a>
 
             </h3>
         </div>
-
 
 
         <div class="block-content block-content-full">
@@ -43,7 +42,8 @@
                     <thead>
                     <tr>
                         <th class="text-center">#</th>
-                        <th>Geadline</th>
+                        <th>Headline</th>
+                        <th>Featured Image</th>
                         <th class="d-none d-sm-table-cell">Status</th>
 
                         <th class="text-center" style="width: 15%;">Profile</th>
@@ -56,8 +56,15 @@
                         <tr>
                             <td class="text-center">{{$i++}}</td>
                             <td class="font-w600">{{$item->post_title}}</td>
+                            <td class="font-w600"><img src="{{$item->featured_image}}" style="width: 50px"/> </td>
                             <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-primary">{{ $item->publish_status }}</span>
+
+                                @if($item->publish_status==1)
+                                    <span class="badge bg-primary">Yes  </span>
+                                @else
+                                    <span class="badge bg-danger">No  </span>
+                                @endif
+
                             </td>
                             <td class="text-center">
 
