@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -13,6 +14,15 @@ class Controller extends BaseController
 
     public function home()
     {
+
+        return view("test");
         return "home";
+    }
+
+    public function postDetails($id)
+    {
+
+        $result = Post::where('id', $id)->first();
+        return view("test")->with("result", $result);
     }
 }

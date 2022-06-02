@@ -29,6 +29,7 @@
      class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
 
     @include('includes.admin.sidebar')
+    @include('sweetalert::alert')
 
     <header id="page-header">
         <div class="content-header">

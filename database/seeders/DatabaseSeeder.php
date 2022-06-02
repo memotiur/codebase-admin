@@ -17,8 +17,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(AdminSeeder::class);
         $this->call(PageSeeder::class);
-        $this->call(CatgeorySeeder::class);
-        $this->call(SubCatgeorySeeder::class);
+
+        $this->call(CategorySeeder::class);
+        $this->call(SubCategorySeeder::class);
         $this->call(PostSeeder::class);
         // \App\Models\User::factory(10)->create();
 

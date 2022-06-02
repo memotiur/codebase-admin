@@ -67,6 +67,40 @@ function getLoginHistory()
         ->get();
 }
 
+function getSummernoteFormatter($input_value)
+{
+
+    $detail = $input_value;
+    $dom = new \domdocument();
+    //$dom->loadHtml($detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+    $dom->loadHTML(mb_convert_encoding($detail, 'HTML-ENTITIES', 'UTF-8'));
+
+    $images = $dom->getelementsbytagname('img');
+
+    try {
+        foreach ($images as $k => $img) {
+            $data = $img->getattribute('src');
+
+            list($type, $data) = explode(';', $data);
+            list(, $data) = explode(',', $data);
+
+            $data = base64_decode($data);
+            $image_name = time() . $k . '.png';
+            $path = public_path() . '/uploads/summernote/' . $image_name;
+
+            file_put_contents($path, $data);
+
+            $img->removeattribute('src');
+            $img->setattribute('src', '/uploads/summernote/' . $image_name);
+        }
+    } catch (\Exception $e) {
+
+    }
+    $detail = $dom->savehtml();
+    return $detail;
+}
+
 function encryptString($data)
 {
     return Crypt::encryptString($data);
@@ -76,6 +110,11 @@ function encryptString($data)
 function decryptString($data)
 {
     return Crypt::decryptString($data);
+}
+
+function getErrorMessage($debug_message, $production_message)
+{
+    return $debug_message;
 }
 
 function getPlatformName()
@@ -110,8 +149,6 @@ function isImage($image_file)
         return 2;
     }
     return 3;
-
-
 }
 
 

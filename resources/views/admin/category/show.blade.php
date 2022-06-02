@@ -13,25 +13,21 @@
     @endpush
 
 
-    {{--    <h2 class="content-heading">DataTables Plugin</h2>--}}
+    {{--    <h2 class="content-heading">Category Table</h2>--}}
 
 
     <div class="block block-rounded">
         <div class="block-header block-header-default">
-
             <h3 class="block-title">
-                Post <small>Table</small>
+                Category <small>Table</small>
 
 
-                <form action="{{ route('posts.create' ) }}" method="GET">
+                <button type="button" class="btn btn-alt-primary float-end" data-bs-toggle="modal"
+                        data-bs-target="#modalCreate">
+                    <i class="fa fa-plus"></i> New
+                </button>
+                @include('admin.category.create')
 
-                    @method("GET")
-                    <button type="submit" class="btn btn-sm btn-secondary js-bs-tooltip-enabled"
-                            data-toggle="tooltip"
-                            title="View Customer">New
-                        <i class="fa fa-plus"></i>
-                    </button>
-                </form>
 
             </h3>
         </div>
@@ -40,13 +36,13 @@
 
             <div class="row">
 
-                <!-- DataTables functionality is initialized with .js-dataTable-full class in js/pages/be_tables_datatables.min.js which was auto compiled from _es6/pages/be_tables_datatables.js -->
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons dataTable no-footer"
                        id="DataTables_Table_1">
                     <thead>
                     <tr>
                         <th class="text-center">#</th>
-                        <th>Geadline</th>
+                        <th>Title</th>
+                        <th>Image</th>
                         <th class="d-none d-sm-table-cell">Status</th>
 
                         <th class="text-center" style="width: 15%;">Profile</th>
@@ -58,27 +54,25 @@
                     @foreach($result as $item)
                         <tr>
                             <td class="text-center">{{$i++}}</td>
-                            <td class="font-w600">{{$item->post_title}}</td>
+                            <td class="font-w600">{{$item->category_title}}</td>
+                            <td><img src="{{$item->featured_image}}" width="50"/></td>
                             <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-primary">{{ $item->publish_status }}</span>
+                                @if( $item->is_active)
+                                    <span class="badge bg-primary">Active</span>
+                                @else
+                                    <span class="badge bg-danger">Inactive</span>
+                                @endif
                             </td>
-                            <td class="text-center">
-
+                            <td class="">
 
                                 <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-secondary js-bs-tooltip-enabled"
+                                            href="{{ route('categories.edit', $item ) }}" data-bs-toggle="modal"
+                                            data-bs-target="#modal{{$item->id}}">
+                                        <i class="fa fa-pencil-alt"></i>
+                                    </button>
 
-                                    <form action="{{ route('posts.edit', $item ) }}" method="POST">
-                                        @csrf
-                                        @method("GET")
-                                        <button type="submit" class="btn btn-sm btn-secondary js-bs-tooltip-enabled"
-                                                data-toggle="tooltip"
-                                                title="View Customer">
-                                            <i class="fa fa-pencil"></i>
-                                        </button>
-                                    </form>
-
-
-                                    <form action="{{ route('posts.destroy', $item ) }}" method="POST">
+                                    <form action="{{ route('categories.destroy', $item ) }}" method="POST">
                                         @csrf
                                         @method("DELETE")
                                         <button type="submit" class="btn btn-sm btn-secondary js-bs-tooltip-enabled"
@@ -89,6 +83,7 @@
                                     </form>
                                 </div>
 
+                                @include('admin.category.edit')
 
                             </td>
                         </tr>

@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->id();
             $table->string('post_title');
             $table->string('slug')->nullable();
-            $table->text('post_details');
+            $table->longText('post_details');
             $table->string('featured_image')->nullable();
             $table->string('tags')->nullable();
             $table->unsignedBigInteger('category_id');

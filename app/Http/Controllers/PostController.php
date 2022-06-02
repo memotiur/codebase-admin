@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PostController extends Controller
 {
@@ -26,7 +30,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+
+        $categories = Category::where('is_active', true)->get();
+        return view("admin.post.create")->with('result', $categories);
     }
 
     /**
@@ -37,7 +43,47 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validator = Validator::make($request->all(), [
+            'post_title' => 'required',
+            /* 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',*/
+        ]);
+
+
+        if ($validator->fails()) {
+            Alert::error("Error", getErrorMessage("Please Fil the input filed properly", "Please Fil the input filed properly"));
+            return back();
+        }
+
+        $image_file = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/uploads/categories');
+            $image->move($destinationPath, $image_name);
+            $image_file = '/uploads/post/' . $image_name;
+        }
+
+        $data = [
+            'post_title' => $request['post_title'],
+            'category_id' => $request['category_id'],
+            'author_id' => Auth::user()->id,
+            'post_details' => getSummernoteFormatter($request['post_details']),
+            'featured_image' => $image_file,
+        ];
+        try {
+            Post::create($data);
+
+            Alert::success("Success", "Successfully category Updated");
+
+        } catch (\Exception $exception) {
+
+            return $exception->getCode();
+            Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));
+        }
+
+        return back();
+
     }
 
     /**
@@ -59,7 +105,12 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+
+        $post = Post::where('id', $post->id)->first();
+        $categories = Category::where('is_active', true)->get();
+        return view("admin.post.edit")
+            ->with('post', $post)
+            ->with('result', $categories);
     }
 
     /**
@@ -71,7 +122,46 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'post_title' => 'required',
+            'category_id' => 'required',
+            /* 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',*/
+        ]);
+
+
+        if ($validator->fails()) {
+            Alert::error("Error", getErrorMessage("Please Fil the input filed properly", "Please Fil the input filed properly"));
+            return back();
+        }
+
+        $image_file = $post->featured_image;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/uploads/categories');
+            $image->move($destinationPath, $image_name);
+            $image_file = '/uploads/post/' . $image_name;
+        }
+
+        $data = [
+            'post_title' => $request['post_title'],
+            'category_id' => $request['category_id'],
+            'author_id' => Auth::user()->id,
+            'post_details' => getSummernoteFormatter($request['post_details']),
+            'featured_image' => $image_file,
+        ];
+        try {
+            Post::where('id', $post->id)->update($data);
+
+            Alert::success("Success", "Successfully Post Updated");
+
+        } catch (\Exception $exception) {
+
+            return $exception->getCode();
+            Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));
+        }
+
+        return back();
     }
 
     /**
@@ -82,6 +172,18 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        return $post;
+
+        try {
+            Post::where('id', $post->id)->delete();
+            Alert::success("Success", "Successfully Post Deleted");
+
+        } catch (\Exception $exception) {
+
+            // return $exception->getCode();
+            Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));
+        }
+
+
+        return back();
     }
 }

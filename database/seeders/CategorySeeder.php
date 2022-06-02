@@ -6,7 +6,7 @@ use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CatgeorySeeder extends Seeder
+class CategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,18 +15,17 @@ class CatgeorySeeder extends Seeder
      */
     public function run()
     {
-
         Category::create([
-           'category_title'=>"বাংলাদেশ"
+            'category_title'=>"বাংলাদেশ"
         ]);
         Category::create([
-           'category_title'=>"আমেরিকা"
+            'category_title'=>"আমেরিকা"
         ]);
         Category::create([
-           'category_title'=>"অর্থনীতি"
+            'category_title'=>"অর্থনীতি"
         ]);
         Category::create([
-           'category_title'=>"বিনোদন"
+            'category_title'=>"বিনোদন"
         ]);
     }
 }
