@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminAuth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,9 @@ Route::any('/reset-password/{id}', [AdminAuth::class, 'resetPassword']);
 Route::group(['middleware' => 'admin'], function () {
 
     Route::get('/dashboard', [AdminController::class, 'dashboard']);
+
+    Route::resource('/posts', PostController::class);
+
     Route::get('/log-out', [AdminController::class, 'logOut']);
 });
 

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminAuth extends Controller
 {
@@ -19,7 +20,7 @@ class AdminAuth extends Controller
             if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']], true)) {
                 return Redirect::to('/dashboard');
             } else {
-                // Alert::error('Sorry! ', "Email or password does not match or Your are not active");
+                Alert::error('Sorry! ', "Email or password does not match or Your are not active");
                 return back()->withInput();
             }
 

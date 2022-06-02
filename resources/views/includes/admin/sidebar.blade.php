@@ -152,17 +152,22 @@
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                            aria-expanded="false" href="#">
                             <i class="nav-main-link-icon fa fa-briefcase"></i>
-                            <span class="nav-main-link-name">Projects</span>
+                            <span class="nav-main-link-name">Manage Post</span>
                         </a>
                         <ul class="nav-main-submenu">
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="">
-                                    <span class="nav-main-link-name">New</span>
+                                <a class="nav-main-link" href="/posts">
+                                    <span class="nav-main-link-name">Posts</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="">
-                                    <span class="nav-main-link-name">Manage</span>
+                                <a class="nav-main-link" href="/categories">
+                                    <span class="nav-main-link-name">Categories</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="/sub-categories">
+                                    <span class="nav-main-link-name">Sub Categories</span>
                                 </a>
                             </li>
                         </ul>

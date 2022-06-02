@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap">
     <link rel="stylesheet" id="css-main" href="/admin-assets/css/codebase.min-5.1.css">
 
+    @stack('header-scripts')
+
 </head>
 <body>
 <div id="page-container"
@@ -149,6 +151,7 @@
 <script src="/admin-assets/js/pages/db_classic.min.js"></script>
 <!--Start js Code For This Page-->
 
+@stack('footer-scripts')
 
 </body>
 </html>
