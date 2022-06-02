@@ -17,24 +17,21 @@
 
 
     <div class="block block-rounded">
+
+
         <div class="block-header block-header-default">
-
             <h3 class="block-title">
-                Post <small>Table</small>
+                Category <small>Table</small>
 
 
-                <form action="{{ route('posts.create' ) }}" method="GET">
-
-                    @method("GET")
-                    <button type="submit" class="btn btn-sm btn-secondary js-bs-tooltip-enabled"
-                            data-toggle="tooltip"
-                            title="View Customer">New
-                        <i class="fa fa-plus"></i>
-                    </button>
-                </form>
+                <a href="/posts/create" class="btn btn-alt-primary float-end" >
+                    <i class="fa fa-plus"></i> New
+                </a>
 
             </h3>
         </div>
+
+
 
         <div class="block-content block-content-full">
 

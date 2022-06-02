@@ -49,8 +49,11 @@
 
 
                         <div class="mb-2">
-                            <label class="" for="image">Image</label>
-                            <input type="file" class="form-control" id="image" name="image">
+                            <label class="" for="image">Featured Image </label>
+                            <input type="file" class="form-control" id="uploadedImage" name="image">
+                        </div>
+                        <div class="mb-2">
+                            <img src="{{$post->featured_image}}" id="imagePreview" class="w-100 img-thumbnail" style="max-height: 275px;"/>
                         </div>
 
                         <div class="mb-2">
@@ -64,6 +67,23 @@
                                 @endforeach
                             </select>
 
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Featured Post</label>
+                            <div class="space-x-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="is_featured" name="pin_post" value="{{$post->pin_post}}" @if($post->pin_post==true) checked @endif>
+                                    <label class="form-check-label" for="is_featured">Yes</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Tags</label>
+                            <textarea type="text" class="form-control" name="tags"
+                                      placeholder="Tags" rows="3">{{$post->tags}}</textarea>
                         </div>
 
                         <div class="mb-2">
@@ -111,6 +131,13 @@
                         ['view', ['fullscreen', 'codeview', 'help']]
                     ]*/
                 });
+
+                uploadedImage.onchange = evt => {
+                    const [file] = uploadedImage.files
+                    if (file) {
+                        imagePreview.src = URL.createObjectURL(file)
+                    }
+                }
             </script>
         @endonce
     @endpush

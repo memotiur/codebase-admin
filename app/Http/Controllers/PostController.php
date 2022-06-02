@@ -44,6 +44,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
+        // return $request->all();
         $validator = Validator::make($request->all(), [
             'post_title' => 'required',
             /* 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',*/
@@ -59,14 +60,19 @@ class PostController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_name = time() . '.' . $image->getClientOriginalExtension();
-            $destinationPath = public_path('/uploads/categories');
+            $destinationPath = public_path('/uploads/post');
             $image->move($destinationPath, $image_name);
             $image_file = '/uploads/post/' . $image_name;
         }
 
+        if ($request['pin_post'] == null) {
+            $request['pin_post'] = false;
+        }
         $data = [
             'post_title' => $request['post_title'],
             'category_id' => $request['category_id'],
+            'pin_post' => $request['pin_post'],
+            'tags' => $request['tags'],
             'author_id' => Auth::user()->id,
             'post_details' => getSummernoteFormatter($request['post_details']),
             'featured_image' => $image_file,
@@ -74,11 +80,11 @@ class PostController extends Controller
         try {
             Post::create($data);
 
-            Alert::success("Success", "Successfully category Updated");
+            Alert::success("Success", "Successfully Post Created");
 
         } catch (\Exception $exception) {
 
-            return $exception->getCode();
+            return $exception->getMessage();
             Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));
         }
 
@@ -138,14 +144,19 @@ class PostController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_name = time() . '.' . $image->getClientOriginalExtension();
-            $destinationPath = public_path('/uploads/categories');
+            $destinationPath = public_path('/uploads/post');
             $image->move($destinationPath, $image_name);
             $image_file = '/uploads/post/' . $image_name;
         }
 
-        $data = [
+        if ($request['pin_post'] == null) {
+            $request['pin_post'] = false;
+        }
+       $data = [
             'post_title' => $request['post_title'],
             'category_id' => $request['category_id'],
+            'pin_post' => $request['pin_post'],
+            'tags' => $request['tags'],
             'author_id' => Auth::user()->id,
             'post_details' => getSummernoteFormatter($request['post_details']),
             'featured_image' => $image_file,
@@ -157,7 +168,7 @@ class PostController extends Controller
 
         } catch (\Exception $exception) {
 
-            return $exception->getCode();
+            return $exception->getMessage();
             Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));
         }
 

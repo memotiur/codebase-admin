@@ -46,8 +46,12 @@
 
 
                         <div class="mb-2">
-                            <label class="" for="image">Image</label>
-                            <input type="file" class="form-control" id="image" name="image">
+                            <label class="" for="uploadedImage">Image</label>
+                            <input type="file" class="form-control" id="uploadedImage" name="image">
+                        </div>
+
+                        <div class="mb-2">
+                            <img src="/images/preview.jpg" id="imagePreview" class="w-100 img-thumbnail" style="max-height: 275px;"/>
                         </div>
 
                         <div class="mb-2">
@@ -60,6 +64,23 @@
                                 @endforeach
                             </select>
 
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Featured Post</label>
+                            <div class="space-x-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="is_featured" name="pin_post" value="1">
+                                    <label class="form-check-label" for="is_featured">Yes</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Tags</label>
+                            <textarea type="text" class="form-control" name="tags"
+                                      placeholder="Tags" rows="3"></textarea>
                         </div>
 
                         <div class="mb-2">
@@ -85,14 +106,16 @@
 
     @push('footer-scripts')
         @once
-            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+                    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+                    crossorigin="anonymous"></script>
 
             <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
             <script>
                 $('#summernote').summernote({
-                    placeholder: 'Hello stand alone ui',
-                    height: 200,
+                    placeholder: 'Post Details',
+                    height: 250,
                     /*tabsize: 2,
                     height: 120,
                     toolbar: [
@@ -105,6 +128,16 @@
                         ['view', ['fullscreen', 'codeview', 'help']]
                     ]*/
                 });
+
+
+                uploadedImage.onchange = evt => {
+                    const [file] = uploadedImage.files
+                    if (file) {
+                        imagePreview.src = URL.createObjectURL(file)
+                    }
+                }
+
+
             </script>
         @endonce
     @endpush
