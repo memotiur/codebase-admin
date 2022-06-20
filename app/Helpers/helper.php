@@ -127,6 +127,10 @@ function getCopyright()
 {
     return "Qubit Solution Lab";
 }
+function getCopyrightUrl()
+{
+    return "Qubit Solution Lab";
+}
 
 
 function isImage($image_file)

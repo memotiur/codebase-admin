@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::any('/login', [AdminAuth::class, 'login']);
+Route::any('/admin/login', [AdminAuth::class, 'login']);
 Route::any('/forget-password', [AdminAuth::class, 'forgetPassword']);
 Route::any('/reset-password/{id}', [AdminAuth::class, 'resetPassword']);
 
@@ -26,10 +27,11 @@ Route::any('/reset-password/{id}', [AdminAuth::class, 'resetPassword']);
 Route::group(['middleware' => 'admin'], function () {
 
     Route::get('/dashboard', [AdminController::class, 'dashboard']);
-
     Route::resource('/posts', PostController::class);
     Route::resource('/categories', CategoryController::class);
 
+    Route::get('/profile', [AdminController::class, 'profile']);
+    Route::post('/profile-update', [AdminController::class, 'profileUpdate']);
     Route::get('/log-out', [AdminController::class, 'logOut']);
 });
 

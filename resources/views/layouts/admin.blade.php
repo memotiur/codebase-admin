@@ -91,10 +91,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-sm btn-alt-secondary" data-toggle="layout"
-                        data-action="side_overlay_toggle">
-                    <i class="fa fa-fw fa-list"></i>
-                </button>
+
             </div>
         </div>
         <div id="page-header-search" class="overlay-header bg-body-extra-light">
@@ -134,11 +131,11 @@
             <div class="row fs-sm">
                 <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
                     Crafted with <i class="fa fa-heart text-danger"></i> by <a class="fw-semibold"
-                                                                               href="https://1.envato.market/ydb"
-                                                                               target="_blank">pixelcave</a>
+                                                                               href="{{ getPlatformName() }}"
+                                                                               target="_blank">Admin</a>
                 </div>
                 <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
-                    <a class="fw-semibold" href="https://1.envato.market/95j" target="_blank">Codebase 5.1</a> &copy;
+                    <a class="fw-semibold" href="{{ getCopyrightUrl() }}" target="_blank">{{ getCopyright()}}</a> &copy;
                     <span data-toggle="year-copy"></span>
                 </div>
             </div>
