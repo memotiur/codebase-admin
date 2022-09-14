@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminAuth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard']);
     Route::resource('/posts', PostController::class);
     Route::resource('/categories', CategoryController::class);
+
+    Route::resource('/pages', PageController::class);
 
     Route::get('/profile', [AdminController::class, 'profile']);
     Route::post('/profile-update', [AdminController::class, 'profileUpdate']);

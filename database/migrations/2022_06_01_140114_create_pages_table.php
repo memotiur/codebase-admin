@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->text("slug");
             $table->longText("details");
             $table->text("featured_image")->nullable();
+            $table->integer("position")->default(1);//1=Top Navbar, 2=Navbar, 3=Footer
+            $table->boolean("is_active")->default(true);
             $table->timestamps();
         });
     }

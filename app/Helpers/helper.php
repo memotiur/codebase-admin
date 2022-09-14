@@ -127,6 +127,7 @@ function getCopyright()
 {
     return "Qubit Solution Lab";
 }
+
 function getCopyrightUrl()
 {
     return "Qubit Solution Lab";
@@ -153,6 +154,22 @@ function isImage($image_file)
         return 2;
     }
     return 3;
+}
+
+function generateSlug($string)
+{
+
+    return preg_replace('#[ -]+#', '-', $string);
+}
+
+function getPosition($id)
+{
+    if ($id == 1) {
+        return "Top bar";
+    } elseif ($id == 2) {
+        return "Navbar";
+    }
+    return "Footer";
 }
 
 

@@ -1,5 +1,5 @@
 @extends("layouts.admin")
-@section('title', 'Edit Post')
+@section('title', 'Edit Page')
 @section("content")
 
     @push('header-scripts')
@@ -9,7 +9,7 @@
     @endpush
 
 
-    <h2 class="content-heading">Edit Post</h2>
+    <h2 class="content-heading">New Post</h2>
 
 
     <div class="block block-rounded">
@@ -19,8 +19,8 @@
 
             <div class="row">
 
-                <form class="row"
-                      action="{{ route('posts.update', $post ) }}" method="POST" enctype="multipart/form-data">
+                <form class="row" action="{{ route('pages.update', $page ) }}" method="POST"
+                      enctype="multipart/form-data">
 
                     @csrf
                     @method("PUT")
@@ -28,18 +28,15 @@
                     <div class="col-md-8">
                         <div class=" mb-2">
                             <label class="form-label" for="example-select-floating">Post Title</label>
-                            <input type="text" class="form-control" id="post_title" name="post_title"
-                                   placeholder="Title" value="{{$post->post_title}}">
+                            <input type="text" class="form-control" id="title" name="title"
+                                   placeholder="Title" value="{{$page->title}}">
                         </div>
 
 
                         <div class="mb-2">
                             <label class="form-label" for="example-select-floating">Details</label>
-                            <textarea type="text" class="form-control" id="summernote" name="post_details"
-                                      placeholder="Details" rows="10">
-
-                                {!! $post->post_details !!}
-                            </textarea>
+                            <textarea type="text" class="form-control" id="summernote" name="details"
+                                      placeholder="Details" rows="10">{!! $page->details !!}</textarea>
 
                         </div>
 
@@ -48,43 +45,39 @@
                     <div class="col-md-4">
 
 
-                        <div class="mb-2">
-                            <label class="" for="image">Featured Image </label>
-                            <input type="file" class="form-control" id="uploadedImage" name="image">
-                        </div>
-                        <div class="mb-2">
-                            <img src="{{$post->featured_image}}" id="imagePreview" class="w-100 img-thumbnail" style="max-height: 275px;"/>
-                        </div>
+                        {{-- <div class="mb-2">
+                             <label class="" for="uploadedImage">Image</label>
+                             <input type="file" class="form-control" id="uploadedImage" name="image">
+                         </div>
+
+                         <div class="mb-2">
+                             <img src="/images/preview.jpg" id="imagePreview" class="w-100 img-thumbnail"
+                                  style="max-height: 275px;"/>
+                         </div>--}}
 
                         <div class="mb-2">
-                            <label class="form-label" for="example-select-floating">Category</label>
-                            <select class="form-select" id="example-select-floating" name="category_id"
+                            <label class="form-label" for="position">Position</label>
+                            <select class="form-select" id="position" name="position"
                                     aria-label="Floating label select example">
-                                <option">Select an option</option>
-                                @foreach($result as $item)
-                                    <option value="{{$item->id}}"
-                                            @if($post->category_id==$item->id) selected @endif>{{$item->category_title}}</option>
-                                @endforeach
+                                <option value="">Select an option</option>
+                                <option value="1" @if($page->position==1) selected @endif>Top Navigation Bar</option>
+                                <option value="2" @if($page->position==2) selected @endif>Navigation Bar</option>
+                                <option value="3" @if($page->position==3) selected @endif>Footer Bar</option>
                             </select>
-
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label">Featured Post</label>
+                            <label class="form-label">Active Status</label>
                             <div class="space-x-2">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="is_featured" name="pin_post" value="{{$post->pin_post}}" @if($post->pin_post==true) checked @endif>
-                                    <label class="form-check-label" for="is_featured">Yes</label>
+                                    <input class="form-check-input" type="checkbox" id="is_active" name="is_active"
+                                           value="1" @if($page->is_active==1) checked @endif>
+                                    <label class="form-check-label" for="is_active">Yes</label>
                                 </div>
 
                             </div>
                         </div>
 
-                        <div class="mb-4">
-                            <label class="form-label">Tags</label>
-                            <textarea type="text" class="form-control" name="tags"
-                                      placeholder="Tags" rows="3">{{$post->tags}}</textarea>
-                        </div>
 
                         <div class="mb-2">
                             <button type="submit" class="form-control btn btn-primary" id="image" name="image">Publish

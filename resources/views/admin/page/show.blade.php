@@ -1,5 +1,5 @@
 @extends("layouts.admin")
-@section('title', 'Show Post')
+@section('title', 'Admin Panel')
 @section("content")
 
     @push('header-scripts')
@@ -21,10 +21,10 @@
 
         <div class="block-header block-header-default">
             <h3 class="block-title">
-                Post <small>Table</small>
+                Page <small>Table</small>
 
 
-                <a href="/posts/create" class="btn btn-alt-primary float-end">
+                <a href="/pages/create" class="btn btn-alt-primary float-end">
                     <i class="fa fa-plus"></i> New
                 </a>
 
@@ -41,25 +41,28 @@
                        id="DataTables_Table_1">
                     <thead>
                     <tr>
-                        <th class="text-center">#</th>
-                        <th>Headline</th>
-                        <th>Featured Image</th>
-                        <th class="d-none d-sm-table-cell">Status</th>
+                        <th class="text-center">Position</th>
+                        <th>Page Title</th>
+                        <th>Details</th>
+                        <th>Status</th>
 
-                        <th class="text-center" style="width: 15%;">Profile</th>
+                        <th class="text-center" style="width: 15%;">Action</th>
                     </tr>
                     </thead>
                     <tbody>
 
                     <?php $i = 1?>
-                    @foreach($result as $item)
+                    @foreach($pages as $item)
                         <tr>
-                            <td class="text-center">{{$i++}}</td>
-                            <td class="font-w600">{{$item->post_title}}</td>
-                            <td class="font-w600"><img src="{{$item->featured_image}}" style="width: 50px"/> </td>
+
+                            <td>{{getPosition($item->position)}}</td>
+                            <td>{{$item->title}}</td>
+                            <td>
+                                <a href="/page/{{$item->slug}}" target="_blank">Details</a>
+                            </td>
                             <td class="d-none d-sm-table-cell">
 
-                                @if($item->publish_status==1)
+                                @if($item->is_active==1)
                                     <span class="badge bg-primary">Yes  </span>
                                 @else
                                     <span class="badge bg-danger">No  </span>
@@ -71,7 +74,7 @@
 
                                 <div class="btn-group">
 
-                                    <form action="{{ route('posts.edit', $item ) }}" method="POST">
+                                    <form action="{{ route('pages.edit', $item ) }}" method="POST">
                                         @csrf
                                         @method("GET")
                                         <button type="submit" class="btn btn-sm btn-secondary js-bs-tooltip-enabled"
@@ -82,7 +85,7 @@
                                     </form>
 
 
-                                    <form action="{{ route('posts.destroy', $item ) }}" method="POST">
+                                    <form action="{{ route('pages.destroy', $item ) }}" method="POST">
                                         @csrf
                                         @method("DELETE")
                                         <button type="submit" class="btn btn-sm btn-secondary js-bs-tooltip-enabled"

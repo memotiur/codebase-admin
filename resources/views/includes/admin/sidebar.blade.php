@@ -1,4 +1,3 @@
-
 <nav id="sidebar">
     <div class="sidebar-content">
         <div class="content-header justify-content-lg-center bg-black-10">
@@ -59,10 +58,11 @@
                             </li>
                         </ul>
                     </li>
+
                     <li class="nav-main-item">
-                        <a class="nav-main-link" href="">
+                        <a class="nav-main-link" href="/pages">
                             <i class="nav-main-link-icon fa fa-file-invoice-dollar"></i>
-                            <span class="nav-main-link-name">Invoices</span>
+                            <span class="nav-main-link-name">Pages</span>
                         </a>
                     </li>
 
