@@ -66,6 +66,13 @@
                         </a>
                     </li>
 
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="/users">
+                            <i class="nav-main-link-icon fa fa-user"></i>
+                            <span class="nav-main-link-name">Operator</span>
+                        </a>
+                    </li>
+
                     <li class="nav-main-heading">Settings</li>
                     <li class="nav-main-item">
                         <a class="nav-main-link" href="/profile">

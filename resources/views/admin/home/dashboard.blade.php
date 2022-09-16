@@ -9,7 +9,7 @@
                 <div class="block-content block-content-full d-flex justify-content-between align-items-center">
                     <div>
                         <div class="fs-3 fw-semibold">34</div>
-                        <div class="fs-sm fw-semibold text-uppercase text-muted">Sales</div>
+                        <div class="fs-sm fw-semibold text-uppercase text-muted">Users</div>
                     </div>
                     <div>
                         <i class="si si-bag fa-2x opacity-25"></i>
@@ -22,8 +22,8 @@
                href="javascript:void(0)">
                 <div class="block-content block-content-full d-flex justify-content-between align-items-center">
                     <div>
-                        <div class="fs-3 fw-semibold">$780</div>
-                        <div class="fs-sm fw-semibold text-uppercase text-muted">Earnings</div>
+                        <div class="fs-3 fw-semibold">80</div>
+                        <div class="fs-sm fw-semibold text-uppercase text-muted">Posts</div>
                     </div>
                     <div>
                         <i class="si si-wallet fa-2x opacity-25"></i>
@@ -36,8 +36,8 @@
                href="javascript:void(0)">
                 <div class="block-content block-content-full d-flex justify-content-between align-items-center">
                     <div>
-                        <div class="fs-3 fw-semibold">65</div>
-                        <div class="fs-sm fw-semibold text-uppercase text-muted">Online</div>
+                        <div class="fs-3 fw-semibold">5</div>
+                        <div class="fs-sm fw-semibold text-uppercase text-muted">Pages</div>
                     </div>
                     <div>
                         <i class="si si-globe fa-2x opacity-25"></i>
@@ -51,7 +51,7 @@
                 <div class="block-content block-content-full d-flex justify-content-between align-items-center">
                     <div>
                         <div class="fs-3 fw-semibold">7</div>
-                        <div class="fs-sm fw-semibold text-uppercase text-muted">Projects</div>
+                        <div class="fs-sm fw-semibold text-uppercase text-muted">Login</div>
                     </div>
                     <div>
                         <i class="si si-briefcase fa-2x opacity-25"></i>
