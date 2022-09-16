@@ -15,9 +15,9 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="">
     <meta property="og:image" content="">
-    <link rel="shortcut icon" href="/admin-assets/media/favicons/favicon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/admin-assets/media/favicons/favicon-192x192.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/admin-assets/media/favicons/apple-touch-icon-180x180.png">
+    <link rel="shortcut icon" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap">
     <link rel="stylesheet" id="css-main" href="/admin-assets/css/codebase.min-5.1.css">
 
