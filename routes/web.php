@@ -47,6 +47,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
 
 Route::get('/', [Controller::class, 'home']);
-
+Route::get('/mail', [Controller::class, 'mail']);
 
 Route::get('/post-details/{id}', [Controller::class, 'postDetails']);

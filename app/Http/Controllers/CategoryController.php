@@ -16,7 +16,6 @@ class CategoryController extends Controller
      */
     public function index()
     {
-
         $result = Category::orderBy('created_at', 'DESC')->get();
         return view("admin.category.show")->with('result', $result);
     }
@@ -39,8 +38,6 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $validator = Validator::make($request->all(), [
             'category_title' => 'required',
             /* 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',*/
@@ -57,16 +54,14 @@ class CategoryController extends Controller
             $image_name = time() . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/uploads/categories');
             $image->move($destinationPath, $image_name);
-            $image_file='/uploads/categories/'.$image_name;
+            $image_file = '/uploads/categories/' . $image_name;
         }
+        $request->request->add(['featured_image' => $image_file]);
 
         try {
-            Category::create([
-                'category_title' => $request['category_title'],
-                'featured_image' => $image_file,
-            ]);
+            Category::create($request->except(['_token', 'image']));
 
-            Alert::success("Success", "Successfully category Updated");
+            Alert::success("Success", "Successfully category Created");
         } catch (\Exception $exception) {
 
             Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));
@@ -113,7 +108,6 @@ class CategoryController extends Controller
             /* 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',*/
         ]);
 
-
         if ($validator->fails()) {
             Alert::error("Error", getErrorMessage("Please Fil the input filed properly", "Please Fil the input filed properly"));
             return back();
@@ -125,15 +119,12 @@ class CategoryController extends Controller
             $image_name = time() . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/uploads/categories');
             $image->move($destinationPath, $image_name);
-            $image_file='/uploads/categories/'.$image_name;
+            $image_file = '/uploads/categories/' . $image_name;
         }
-
+        $request->request->add(['featured_image' => $image_file]);
 
         try {
-            Category::where('id', $category->id)->update([
-                'category_title' => $request['category_title'],
-                'featured_image' => $image_file,
-            ]);
+            Category::where('id', $category->id)->update($request->except(['_token', 'image']));
 
             Alert::success("Success", "Successfully category Updated");
 
@@ -153,15 +144,11 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-
-
         try {
             Category::where('id', $category->id)->delete();
-
             Alert::success("Success", "Successfully Deleted");
 
         } catch (\Exception $exception) {
-
 
             Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));
         }

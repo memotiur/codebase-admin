@@ -54,7 +54,7 @@ class PageController extends Controller
         if ($request['is_active'] == null) {
             $request['is_active'] = false;
         }
-        $request['slug'] = generateSlug($request['title']);
+        $request['slug'] = getTextToUrl($request['title']);
         //return $request->all();
         try {
             Page::create($request->except([

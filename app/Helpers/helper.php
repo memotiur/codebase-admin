@@ -56,16 +56,6 @@ function getTimeOnly($date)
     return Carbon::createFromFormat('H:i:s', $date)->format('h:i:s');
 }
 
-function getLoginHistory()
-{
-    return LoginHistory::leftJoin('admin_roles', 'admin_roles.id', '=', 'login_histories.admin_id')->orderBy('login_histories.created_at', 'DESC')
-        ->select('login_histories.created_at',
-            'login_histories.updated_at',
-            'admin_roles.name',
-            'admin_roles.phone',
-        )->limit(10)
-        ->get();
-}
 
 function getSummernoteFormatter($input_value)
 {
@@ -117,6 +107,20 @@ function getErrorMessage($debug_message, $production_message)
     return $debug_message;
 }
 
+function validatePhoneNumber($phone)
+{
+    if ($phone == null) {
+        return 0;
+    }
+    if (substr($phone, 0, 1) != '0') {
+        $phone = "0" . $phone;
+    }
+    $pattern = "/^(?:\+88|01)?(?:\d{11}|\d{13})$/";
+    if (preg_match($pattern, $phone)) {
+        return 1;
+    };
+}
+
 function getPlatformName()
 {
     return "Qubit";
@@ -136,7 +140,6 @@ function getCopyrightUrl()
 
 function isImage($image_file)
 {
-
     $imageExtensions = ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'svg', 'svgz', 'cgm', 'djv', 'djvu', 'ico', 'ief', 'jpe', 'pbm', 'pgm', 'pnm', 'ppm', 'ras', 'rgb', 'tif', 'tiff', 'wbmp', 'xbm', 'xpm', 'xwd'];
 
     $explodeImage = explode('.', $image_file);
@@ -144,10 +147,7 @@ function isImage($image_file)
 
     if (in_array($extension, $imageExtensions)) {
         return 1;
-
     }
-
-
     $info = pathinfo($image_file);
     $ext = $info['extension'];
     if ($ext == "pdf") {
@@ -156,11 +156,24 @@ function isImage($image_file)
     return 3;
 }
 
-function generateSlug($string)
-{
 
-    return preg_replace('#[ -]+#', '-', $string);
+function getYoutubeVideoId($link)
+{
+    preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $link, $matches);
+    if ($matches != null) {
+        $video = $matches[0];
+    } else {
+        $video = "";
+    }
+    return $video;
 }
+
+function getTextToUrl($link)
+{
+    return $link = preg_replace('/\s+/', '-', $link);
+
+}
+
 
 function getPosition($id)
 {
