@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\DataImport;
+use App\Imports\UsersImport;
 use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -9,6 +11,8 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class Controller extends BaseController
 {
@@ -17,7 +21,7 @@ class Controller extends BaseController
     public function home()
     {
 
-       //
+        //
         // return view("test");
         return "home";
     }
@@ -48,5 +52,17 @@ class Controller extends BaseController
         });
 
         return "mail";
+    }
+
+    public function qrCode()
+    {
+        return QrCode::generate('Make me into a QrCode!');
+
+        return QrCode::generate('Make me into a QrCode!', '../public/images/favicon.png');;
+    }
+    public function import()
+    {
+        $rows = Excel::toArray(new DataImport, 'users.xlsx');
+        return response()->json(["rows"=>$rows]);
     }
 }

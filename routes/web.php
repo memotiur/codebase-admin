@@ -48,5 +48,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
 Route::get('/', [Controller::class, 'home']);
 Route::get('/mail', [Controller::class, 'mail']);
+Route::get('/qr-code', [Controller::class, 'qrCode']);
+
+
+Route::get('/import', [Controller::class, 'import']);
+
+
+
 
 Route::get('/post-details/{id}', [Controller::class, 'postDetails']);
