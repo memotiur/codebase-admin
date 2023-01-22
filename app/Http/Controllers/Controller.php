@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Imports\DataImport;
-use App\Imports\UsersImport;
+use App\Models\PageView;
+use App\Models\PageVisitor;
 use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -18,10 +21,46 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function home()
+    public function home(Request $request)
     {
 
-        //
+        return view("frontend.home.index");
+
+
+        $page_views = PageVisitor::where('ip_address', $request->ip())->first();
+        if (is_null($page_views)) {
+            try {
+
+                $url = "http://api.ipapi.com/" . $request->ip() . "?access_key=" . getIpAddressApikey();
+                //http request
+                $response = Http::get($url);
+                //$data= json_decode($response->body());
+
+                PageVisitor::create([
+                    'ip_address' => $request->ip(),
+                    'details' => $response->body(),
+                ]);
+
+                PageView::create([
+                    'ip_address' => $request->ip(),
+                    'details' => $response->body(),
+                ]);
+
+            } catch (\Exception $e) {
+
+                //return $e->getMessage();
+            }
+        } else {
+            try {
+                PageView::create([
+                    'ip_address' => $request->ip(),
+                    'details' => $page_views->details,
+                ]);
+            } catch (\Exception $e) {
+                //return $e->getMessage();
+            }
+        }
+
         // return view("test");
         return "home";
     }
@@ -60,9 +99,10 @@ class Controller extends BaseController
 
         return QrCode::generate('Make me into a QrCode!', '../public/images/favicon.png');;
     }
+
     public function import()
     {
         $rows = Excel::toArray(new DataImport, 'users.xlsx');
-        return response()->json(["rows"=>$rows]);
+        return response()->json(["rows" => $rows]);
     }
 }

@@ -39,17 +39,6 @@ function getDateFormat($date)
     return $createdAt->format('d M, Y g:i A');
 }
 
-function getDateOnly($month, $employee_id)
-{
-    $data = InOutMonitor::where('user_id', $employee_id)
-        ->whereDate('in_time', $month)
-        ->first();
-    if (is_null($data)) {
-        return "-";
-    } else {
-        return $data;
-    }
-}
 
 function getTimeOnly($date)
 {
@@ -185,5 +174,15 @@ function getPosition($id)
     return "Footer";
 }
 
+function getIpAddressApikey()
+{
+
+    $key = [
+        '508260a5c0fcef9a92d2deba2be95be7',
+        'b26ebfcc565022a9471281f9c3413957',
+        'b7f4193800273cc7a0d674f49bdf5655'
+    ];
+    return $key[array_rand($key)];
+}
 
 ?>
