@@ -5,8 +5,11 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PageViewController;
 use App\Http\Controllers\PostController;
+
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +37,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('/users', UserController::class);
 
     Route::resource('/pages', PageController::class);
+    Route::get('/traffic', [PageViewController::class, 'traffic']);
+
 
     Route::get('/profile', [AdminController::class, 'profile']);
     Route::post('/profile-update', [AdminController::class, 'profileUpdate']);
@@ -54,6 +59,17 @@ Route::get('/qr-code', [Controller::class, 'qrCode']);
 Route::get('/import', [Controller::class, 'import']);
 
 
-
-
 Route::get('/post-details/{id}', [Controller::class, 'postDetails']);
+
+
+Route::get('/clear', function () {
+
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    return "Cleared!";
+});
+Route::get('/crud-generator', [Controller::class, 'crudGenerator']);
+
+Route::resource('/product-categories', ProductCategoryController::class);

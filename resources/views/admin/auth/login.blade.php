@@ -32,8 +32,9 @@
                     <div class="content content-full overflow-hidden">
                         <div class="py-4 text-center">
                             <a class="link-fx fw-bold" href="/">
-                                <i class="fa fa-fire"></i>
-                               {{-- <span class="fs-4 text-body-color">code</span><span class="fs-4">base</span>--}}
+                               {{-- <span class="fs-4 text-body-color">Qubit</span><span class="fs-4">Solution</span>--}}
+
+                                <img src="/images/logo.png" width="150" alt=""/>
                             </a>
                             <h1 class="h3 fw-bold mt-4 mb-2">Welcome to {{getPlatformName()}} Dashboard</h1>
                         </div>

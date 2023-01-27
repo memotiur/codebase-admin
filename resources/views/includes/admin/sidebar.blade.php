@@ -33,7 +33,17 @@
                             <span class="nav-main-link-name">Dashboard</span>
                         </a>
                     </li>
-                    <li class="nav-main-heading">Headquarters</li>
+                    <li class="nav-main-heading">Main</li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link active" href="/product-categories">
+                            <i class="nav-main-link-icon fa fa-coffee"></i>
+                            <span class="nav-main-link-name">Product Categories</span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="nav-main-heading">Extra Pages</li>
                     <li class="nav-main-item">
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                            aria-expanded="false" href="#">
@@ -60,8 +70,16 @@
                     </li>
 
                     <li class="nav-main-item">
+                        <a class="nav-main-link" href="/traffic">
+                            <i class="nav-main-link-icon fa fa-angle-right"></i>
+                            <span class="nav-main-link-name">Traffic</span>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-main-item">
                         <a class="nav-main-link" href="/pages">
-                            <i class="nav-main-link-icon fa fa-page4"></i>
+                            <i class="nav-main-link-icon fa fa-pallet"></i>
                             <span class="nav-main-link-name">Pages</span>
                         </a>
                     </li>

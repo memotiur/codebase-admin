@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\PageView;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -15,7 +17,13 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        return view("admin.home.dashboard");
+        DB::statement("SET SQL_MODE=''");
+        $result = PageView::groupBy('ip_address')->get();
+        $today = PageView::whereDate('created_at', today())->count();
+        $total_visitors = count($result);
+        $total_page_views = PageView::count();
+        $total_users = User::count();
+        return view('admin.home.dashboard', compact('total_visitors', 'total_page_views', 'total_users', 'today'));
     }
 
     public function profile()

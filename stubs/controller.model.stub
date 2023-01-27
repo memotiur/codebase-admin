@@ -1,0 +1,111 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespacedModel }};
+use {{ rootNamespace }}Http\Controllers\Controller;
+use {{ namespacedRequests }}
+use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\File;
+
+class {{ class }} extends Controller
+{
+    public function index()
+    {
+        $results= {{ model }}::orderBy('id', 'DESC')->paginate(25);
+        return view('admin.{{ model }}.index',compact('results'));
+
+    }
+
+
+    public function create()
+    {
+        return view('admin.{{ model }}.create');
+    }
+
+
+    public function store({{ storeRequest }} $request)
+    {
+        $validator = Validator::make($request->all(), [
+                'title' => 'required',
+             ]);
+        if ($validator->fails()) {
+            Alert::error("Error", getErrorMessage("Please Fil the input filed properly", "Please Fil the input filed properly"));
+            return back();
+        }
+
+        if ($request->hasFile('image')) {
+           $image = $request->file('image');
+           $image_name = time() . '.' . $image->getClientOriginalExtension();
+           $image_resize = Image::make($image->getRealPath());
+           $image_resize->orientate()->fit(250, 300, function ($constraint) {
+               /*$constraint->aspectRatio();*/
+               $constraint->upsize();
+           })->save(public_path('/images/' . $image_name));
+           $request->merge(['featured_image' => "/images/".$image_name]);
+        }
+
+        try{
+            $data = $request->except('_token', '_method', 'image');
+            {{ model }}::create($data);
+            Alert::success("Success", getErrorMessage("{{ model }}", "created"));
+            return back();
+        }catch(\Exception $exception){
+            Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));
+            return back();
+        }
+
+    }
+
+
+    public function show({{ model }} ${{ modelVariable }})
+    {
+        return view('admin.{{ model }}.show',compact('{{ modelVariable }}'));
+    }
+
+
+    public function edit({{ model }} ${{ modelVariable }})
+    {
+        return view('admin.{{ model }}.edit',compact('{{ modelVariable }}'));
+    }
+
+    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }})
+    {
+         if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = time() . '.' . $image->getClientOriginalExtension();
+            $image_resize = Image::make($image->getRealPath());
+            $image_resize->orientate()->fit(250, 300, function ($constraint) {
+                /*$constraint->aspectRatio();*/
+                $constraint->upsize();
+            })->save(public_path('/images/' . $image_name));
+            $request->merge(['featured_image' => "/images/".$image_name]);
+         }
+
+        try{
+            $data = $request->except('_token', '_method', 'image');
+            ${{ modelVariable }}->update($data);
+            Alert::success("Success", getErrorMessage("{{ model }}", "updated"));
+            return back();
+        }catch(\Exception $exception){
+            Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));
+            return back();
+        }
+
+    }
+
+
+    public function destroy({{ model }} ${{ modelVariable }})
+    {
+        try{
+            ${{ modelVariable }}->delete();
+            Alert::success("Success", getErrorMessage("{{ model }}", "deleted"));
+            return back();
+        }catch(\Exception $exception){
+            Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));
+            return back();
+        }
+    }
+}

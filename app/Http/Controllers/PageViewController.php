@@ -7,79 +7,22 @@ use Illuminate\Http\Request;
 
 class PageViewController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function traffic(Request $request)
     {
-        //
-    }
+        $query = PageView::orderBy("created_at", "DESC");
+        if ($request['ip_address'] != null) {
+            $query->where("ip_address", "LIKE", "%" . $request['ip_address'] . "%");
+        }
+        if ($request['date'] != null) {
+            $query->whereDate("created_at", $request['date']);
+        }
+        $count = $query->count();
+        $data = $query->paginate(25);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\PageView  $pageView
-     * @return \Illuminate\Http\Response
-     */
-    public function show(PageView $pageView)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PageView  $pageView
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PageView $pageView)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PageView  $pageView
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, PageView $pageView)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\PageView  $pageView
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(PageView $pageView)
-    {
-        //
+        return view("admin.pageview.index")
+            ->with('results', $data)
+            ->with('count', $count)
+            ->with('request', $request);
     }
 }
