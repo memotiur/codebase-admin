@@ -4,10 +4,10 @@ use App\Http\Controllers\AdminAuth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\CrudController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PageViewController;
 use App\Http\Controllers\PostController;
-
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -70,6 +70,7 @@ Route::get('/clear', function () {
     Artisan::call('view:clear');
     return "Cleared!";
 });
-Route::get('/crud-generator', [Controller::class, 'crudGenerator']);
+Route::get('/crud-generator', [CrudController::class, 'crudGenerator']);
+Route::get('/crud-view-generator', [CrudController::class, 'crudViewGenerator']);
 
-Route::resource('/product-categories', ProductCategoryController::class);
+Route::resource('/attendances', \App\Http\Controllers\AttendanceController::class);

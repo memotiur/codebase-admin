@@ -23,3 +23,5 @@ composer require --dev laracasts/generators
 ```bash
 composer require charlieuki/receipt-printer
 ```
+
+https://admiko.com/

@@ -28,7 +28,47 @@
 <div id="page-container"
      class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
 
-    @include('includes.admin.sidebar')
+
+
+    <nav id="sidebar">
+        <div class="sidebar-content">
+            <div class="content-header justify-content-lg-center bg-black-10">
+                <div>
+        <span class="smini-visible fw-bold tracking-wide fs-lg">
+          c<span class="text-primary">b</span>
+        </span>
+                    <a class="link-fx fw-bold tracking-wide mx-auto" href="/dashboard">
+          <span class="smini-hidden">
+            <i class="fa fa-fire text-primary"></i>
+            <span class="fs-4 text-dual">Admin</span><span class="fs-4 text-primary">Panel</span>
+          </span>
+                    </a>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-sm btn-alt-danger d-lg-none" data-toggle="layout"
+                            data-action="sidebar_close">
+                        <i class="fa fa-fw fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="js-sidebar-scroll">
+                <div class="content-side content-side-full">
+                    <button type="button"
+                            class="btn btn-primary w-100 push d-flex align-items-center justify-content-between">
+                        <span>Add Project</span>
+                        <i class="fa fa-plus opacity-50 ms-1"></i>
+                    </button>
+                    <ul class="nav-main">
+
+                        @include('includes.admin.sidebar')
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
     @include('sweetalert::alert')
 
     <header id="page-header">
