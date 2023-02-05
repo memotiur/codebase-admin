@@ -4,14 +4,14 @@
         <div class="modal-content">
 
             <form class="row g-3 align-items-center"
-                  action="{{ route('categories.store' ) }}" method="POST"  enctype="multipart/form-data">
+                  action="crud_route" method="POST"  enctype="multipart/form-data">
 
                 @csrf
                 @method("POST")
 
                 <div class="block block-rounded shadow-none mb-0">
                     <div class="block-header block-header-default">
-                        <h3 class="block-title">Category Edit</h3>
+                        <h3 class="block-title">crud_title</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
                                 <i class="fa fa-times"></i>
@@ -20,11 +20,8 @@
                     </div>
                     <div class="block-content fs-sm pb-3">
 
-                        <div class="col-12">
-                            <label class="" for="category_title">Title</label>
-                            <input type="text" class="form-control" id="category_title" name="category_title"
-                                   placeholder="Title">
-                        </div>
+                        crud_fields
+
                         <div class="col-12">
                             <label class="" for="image">Image</label>
                             <input type="file" class="form-control" id="image" name="image">

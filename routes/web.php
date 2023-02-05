@@ -39,6 +39,12 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('/pages', PageController::class);
     Route::get('/traffic', [PageViewController::class, 'traffic']);
 
+    Route::get('/crud-generator', [CrudController::class, 'crudGenerator']);
+    Route::any('/crud-generator/start', [CrudController::class, 'crudGeneratorStart']);
+
+    Route::get('/crud-delete', [CrudController::class, 'crudDelete']);
+    Route::get('/project-clone', [CrudController::class, 'projectClone']);
+
 
     Route::get('/profile', [AdminController::class, 'profile']);
     Route::post('/profile-update', [AdminController::class, 'profileUpdate']);
@@ -70,7 +76,8 @@ Route::get('/clear', function () {
     Artisan::call('view:clear');
     return "Cleared!";
 });
-Route::get('/crud-generator', [CrudController::class, 'crudGenerator']);
-Route::get('/crud-view-generator', [CrudController::class, 'crudViewGenerator']);
 
-Route::resource('/attendances', \App\Http\Controllers\AttendanceController::class);
+
+
+Route::resource('/kitchens', \App\Http\Controllers\KitchenController::class);
+Route::resource('/kitchen-admins', \App\Http\Controllers\KitchenAdminController::class);

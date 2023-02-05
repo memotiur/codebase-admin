@@ -185,4 +185,47 @@ function getIpAddressApikey()
     return $key[array_rand($key)];
 }
 
+function getColumnType()
+{
+    return $data_types = [
+        'string',
+        'text',
+        'bigIncrements',
+        'bigInteger',
+        'binary',
+        'boolean',
+        'char',
+        'date',
+        'dateTime',
+        'dateTimeTz',
+        'decimal',
+        'double',
+        'enum',
+        'float',
+        'increments',
+        'integer',
+        'json',
+        'jsonb',
+        'longText',
+        'mediumInteger',
+        'mediumText',
+        'nullableTimestamps',
+        'smallInteger',
+        'time',
+        'timeTz',
+        'timestamp',
+        'timestampTz',
+        'tinyInteger',
+        'unsignedBigInteger',
+        'unsignedDecimal',
+        'unsignedInteger',
+        'unsignedMediumInteger',
+        'unsignedSmallInteger',
+        'unsignedTinyInteger',
+        'uuid',
+        'year',
+    ];
+
+}
+
 ?>

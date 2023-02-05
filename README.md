@@ -24,4 +24,4 @@ composer require --dev laracasts/generators
 composer require charlieuki/receipt-printer
 ```
 
-https://admiko.com/
+

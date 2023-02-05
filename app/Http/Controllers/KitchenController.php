@@ -1,32 +1,32 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Http\Controllers;
 
-use {{ namespacedModel }};
-use {{ rootNamespace }}Http\Controllers\Controller;
-use {{ namespacedRequests }}
-use Illuminate\Support\Facades\Validator;
-use RealRashid\SweetAlert\Facades\Alert;
-use Intervention\Image\Facades\Image;
+use App\Models\Kitchen;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
+use RealRashid\SweetAlert\Facades\Alert;
 
-class {{ class }} extends Controller
+class KitchenController extends Controller
 {
     public function index()
     {
-        $results= {{ model }}::orderBy('id', 'DESC')->paginate(25);
-        return view('admin.view_path.index',compact('results'));
+        $results= Kitchen::orderBy('id', 'DESC')->paginate(25);
+        return view('admin.kitchen.index',compact('results'));
 
     }
 
 
     public function create()
     {
-        return view('admin.view_path.create');
+        return view('admin.kitchen.create');
     }
 
 
-    public function store({{ storeRequest }} $request)
+    public function store(Request $request)
     {
         /*$validator = Validator::make($request->all(), [
                 'title' => 'required',
@@ -53,8 +53,8 @@ class {{ class }} extends Controller
 
         try{
             $data = $request->except('_token', '_method', 'image');
-            {{ model }}::create($data);
-            Alert::success("Success", getErrorMessage("{{ model }}", "created"));
+            Kitchen::create($data);
+            Alert::success("Success", getErrorMessage("Kitchen", "created"));
             return back();
         }catch(\Exception $exception){
             Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));
@@ -64,18 +64,18 @@ class {{ class }} extends Controller
     }
 
 
-    public function show({{ model }} ${{ modelVariable }})
+    public function show(Kitchen $kitchen)
     {
-        return view('admin.view_path.show',compact('{{ modelVariable }}'));
+        return view('admin.kitchen.show',compact('kitchen'));
     }
 
 
-    public function edit({{ model }} ${{ modelVariable }})
+    public function edit(Kitchen $kitchen)
     {
-        return view('admin.view_path.edit',compact('{{ modelVariable }}'));
+        return view('admin.kitchen.edit',compact('kitchen'));
     }
 
-    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }})
+    public function update(Request $request, Kitchen $kitchen)
     {
          if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -94,8 +94,8 @@ class {{ class }} extends Controller
 
         try{
             $data = $request->except('_token', '_method', 'image');
-            ${{ modelVariable }}->update($data);
-            Alert::success("Success", getErrorMessage("{{ model }}", "updated"));
+            $kitchen->update($data);
+            Alert::success("Success", getErrorMessage("Kitchen", "updated"));
             return back();
         }catch(\Exception $exception){
             Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));
@@ -105,11 +105,11 @@ class {{ class }} extends Controller
     }
 
 
-    public function destroy({{ model }} ${{ modelVariable }})
+    public function destroy(Kitchen $kitchen)
     {
         try{
-            ${{ modelVariable }}->delete();
-            Alert::success("Success", getErrorMessage("{{ model }}", "deleted"));
+            $kitchen->delete();
+            Alert::success("Success", getErrorMessage("Kitchen", "deleted"));
             return back();
         }catch(\Exception $exception){
             Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));

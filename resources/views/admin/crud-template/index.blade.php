@@ -15,14 +15,14 @@
     <div class="block block-rounded">
         <div class="block-header block-header-default">
             <h3 class="block-title">
-                Category <small>Table</small>
+                crud_title <small>Table</small>
 
 
                 <button type="button" class="btn btn-alt-primary float-end" data-bs-toggle="modal"
                         data-bs-target="#modalCreate">
                     <i class="fa fa-plus"></i> New
                 </button>
-                @include('admin.category.create')
+                @include('create_include')
 
             </h3>
         </div>

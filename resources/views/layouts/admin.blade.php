@@ -53,11 +53,11 @@
             </div>
             <div class="js-sidebar-scroll">
                 <div class="content-side content-side-full">
-                    <button type="button"
+                    <a href="/crud-generator" type="button"
                             class="btn btn-primary w-100 push d-flex align-items-center justify-content-between">
-                        <span>Add Project</span>
+                        <span>Crud Generator</span>
                         <i class="fa fa-plus opacity-50 ms-1"></i>
-                    </button>
+                    </a>
                     <ul class="nav-main">
 
                         @include('includes.admin.sidebar')

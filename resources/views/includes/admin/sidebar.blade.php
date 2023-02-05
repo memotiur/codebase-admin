@@ -4,14 +4,6 @@
         <span class="nav-main-link-name">Dashboard</span>
     </a>
 </li>
-<li class="nav-main-heading">Main</li>
-<li class="nav-main-item">
-    <a class="nav-main-link active" href="/product-categories">
-        <i class="nav-main-link-icon fa fa-coffee"></i>
-        <span class="nav-main-link-name">Product Categories</span>
-    </a>
-</li>
-
 
 <li class="nav-main-heading">Extra Pages</li>
 <li class="nav-main-item">
@@ -74,10 +66,15 @@
     </a>
 </li>
 
-
 <li class='nav-main-item'>
-    <a class='nav-main-link' href='/attendances'>
-        <i class='nav-main-link-icon fa fa-pallet'></i>
-        <span class='nav-main-link-name'>Attendance</span>
+    <a class='nav-main-link' href='/kitchens'>
+        <i class='nav-main-link-icon fa fa-sticky-note'></i>
+        <span class='nav-main-link-name'>Kitchen</span>
+    </a>
+</li>
+<li class='nav-main-item'>
+    <a class='nav-main-link' href='/kitchen-admins'>
+        <i class='nav-main-link-icon fa fa-sticky-note'></i>
+        <span class='nav-main-link-name'>KitchenAdmin</span>
     </a>
 </li>
