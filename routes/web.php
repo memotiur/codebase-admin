@@ -107,3 +107,4 @@ Route::get('/controller-check', function () {
 Route::resource('/payment-logs', \App\Http\Controllers\PaymentLogController::class);
 
 Route::resource('/test-models', \App\Http\Controllers\TestModelController::class);
+Route::resource('/farmers', \App\Http\Controllers\FarmerController::class);

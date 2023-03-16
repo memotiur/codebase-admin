@@ -13,7 +13,7 @@
     <div class="block block-rounded">
         <div class="block-content block-content-full">
 
-            <form action="/route" method="get">
+            <form action="/route_link" method="get">
 
                 <div class="row">
 

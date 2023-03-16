@@ -183,7 +183,7 @@ class CrudController extends Controller
 
             $index_file = File::get(resource_path('views/admin/' . $view_path . '/index.blade.php'));
             $index_file = str_replace("table_data", $table, $index_file);
-            $index_file = str_replace("route", $route_path, $index_file);
+            $index_file = str_replace("route_link", $route_path, $index_file);
             $index_file = str_replace("crud_title", $model_name, $index_file);
 
             $index_file = str_replace("create_include", "admin." . $view_path . ".create", $index_file);
