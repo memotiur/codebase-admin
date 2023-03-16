@@ -82,8 +82,7 @@
                             <div class="col">
                                 <label class="" for="default_value">Default Value</label>
                                 <input type="text" class="form-control" id="default_value" name="default_value[]"
-                                       value="@{{ item.default_value }}"
-                                       placeholder="email@email.com">
+                                       value="@{{ item.default_value }}">
                             </div>
 
                             <div class="col">

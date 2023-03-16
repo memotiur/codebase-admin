@@ -10,6 +10,28 @@
 
 
     {{--    <h2 class="content-heading">Category Table</h2>--}}
+    <div class="block block-rounded">
+        <div class="block-content block-content-full">
+
+            <form action="/route" method="get">
+
+                <div class="row">
+
+                    <div class="col">
+                        <input name="search" type="text" class="form-control" placeholder="">
+                    </div>
+
+
+                    <div class="col">
+                        <button type="submit" class="btn btn-alt-primary">Search</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
 
 
     <div class="block block-rounded">

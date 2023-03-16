@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LoginHistory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +15,7 @@ class AdminAuth extends Controller
     {
         if ($request->isMethod("post")) {
 
+            Hash::make($request['password']);
             // return $request->all();
             if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']], true)) {
                 return Redirect::to('/dashboard');
@@ -36,7 +36,7 @@ class AdminAuth extends Controller
 
             if (!is_null($user)) {
 
-                 $msg = url("/") . "/reset-password/" . encryptString($user->id);
+                $msg = url("/") . "/reset-password/" . encryptString($user->id);
                 mail($user->email, "Password Reset", $msg);
 
                 alert()->success('Success', 'An email sent to you. Please check your Mail.');

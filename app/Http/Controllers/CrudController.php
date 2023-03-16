@@ -63,17 +63,17 @@ class CrudController extends Controller
         //return $schema;
         $columns = json_encode($columns);
 
-
         $route_path = preg_replace("/[A-Z]/", "-\$0", $model_name);
         $route_path = substr(strtolower($route_path), 1) . "s";
         $view_path = preg_replace("/[A-Z]/", "_\$0", $model_name);
         $view_path = substr(strtolower($view_path), 1);
         $table_name = $view_path . "s";
+
         $controller_name = '\App\Http\Controllers\\' . $model_name . 'Controller::class';
 
 
         try {
-            if($request['middleware'] == 1) {
+            if ($request['middleware'] == 1) {
                 Artisan::call('make:middleware ' . $model_name . 'Middleware');
             }
 
@@ -111,12 +111,11 @@ class CrudController extends Controller
 
             //Update Model
             $model_file = File::get(app_path('Models/' . $model_name . '.php'));
-            $model_file = str_replace("protected \$fillable = [];", "protected \$fillable = $columns;\n\tprotected \$table = '$table_name';", $model_file);
+            $model_file = str_replace("protected \$fillable = [];", "protected \$fillable = $columns;\n\t protected \$table = '$table_name';", $model_file);
             File::put(app_path('Models/' . $model_name . '.php'), $model_file);
 
 
             //Create Route
-
             if (!Route::has($route_path . ".index")) {
                 $routes = File::get(base_path('routes/web.php'));
                 $route = "\nRoute::resource('/$route_path', $controller_name);";
@@ -163,7 +162,8 @@ class CrudController extends Controller
                                                 <i class='fa fa-pencil-alt'></i>
                                     </button>
 
-                                    <form action='' method='POST'>
+
+                                    <form action='{{ route('$route_path.destroy', \$item ) }}' method='POST'>
                                         @csrf
                                         @method('DELETE')
                                         <button type='submit' class='btn btn-sm btn-secondary js-bs-tooltip-enabled'
@@ -183,6 +183,7 @@ class CrudController extends Controller
 
             $index_file = File::get(resource_path('views/admin/' . $view_path . '/index.blade.php'));
             $index_file = str_replace("table_data", $table, $index_file);
+            $index_file = str_replace("route", $route_path, $index_file);
             $index_file = str_replace("crud_title", $model_name, $index_file);
 
             $index_file = str_replace("create_include", "admin." . $view_path . ".create", $index_file);
@@ -191,47 +192,61 @@ class CrudController extends Controller
             //Update Create File
             $crud_create_fields = "";
             $crud_edit_fields = "";
+            $column_names = "";
             foreach ($request['column'] as $key => $column) {
-                /* $crud_create_fields .= "<div class=\"form-group\">
-                      <label for=\"example-text-input\" class=\"col-2 col-form-label\">$column</label>
-                      <div class=\"col-10\">
-                          <input class=\"form-control\" type=\"text\" name=\"$column\" value=\"{{old('$column')}}\" id=\"example-text-input\">
-                      </div>
-                  </div>";*/
 
-
+                $type = $request['input_type'][$key];
+                $required = false;
+                if ($type != 'nullable') {
+                    $required = true;
+                }
+                $required_field = '';
+                if ($required) {
+                    $required_field = '<span class="text-danger">*</span>';
+                }
                 if ($request['input_type'][$key] == 2) {
-                    $crud_create_fields .= ' <label class="form-label" for="' . $column . '">' . $column . '</label>
-                            <select class="form-select" id="' . $column . '" name="' . $column . '">
-                                <option selected="">Select an option</option>
+
+                    $crud_create_fields .= ' <label class="form-label" for="' . $column . '">' . $column . $required_field . ' </label>
+                            <select class="form-select" id="' . $column . '" name="' . $column . '" required="' . $required . '">
+
                                                                     <option value="1">Active</option>
-                                                                    <option value="2">Inactive</option>
+                                                                    <option value="0">Inactive</option>
 
                                                             </select>';
 
-                    $crud_edit_fields .= ' <label class="form-label" for="' . $column . '">' . $column . '</label>
-                            <select class="form-select" id="' . $column . '" name="' . $column . '">
+                    $crud_edit_fields .= ' <label class="form-label" for="' . $column . '">' . $column . $required_field . '</label>
+                            <select class="form-select" id="' . $column . '" name="' . $column . '" required="' . $required . '">
                                 <option selected="">Select an option</option>
                                                                     <option value="1" @if($item->' . $column . '==1) selected  @endif>Active</option>
                                                                     <option value="0"  @if($item->' . $column . '==0) selected  @endif>Inactive</option>
 
                                                             </select>';
-                } else {
-
+                } else if ($request['input_type'][$key] == 3) {
                     $crud_create_fields .= '<div class="col-12">
-                            <label class="" for="category_title">' . $column . '</label>
-                            <input type="text" class="form-control" id="' . $column . '" name="' . $column . '"
-                                   placeholder="' . $column . '">
+                            <label class="" for="' . $column . '">' . $column . $required_field . '</label>
+                            <textarea type="text" class="form-control" id="' . $column . '" name="' . $column . '"
+                                   placeholder="' . $column . '" required="' . $required . '"></textarea>
                         </div>';
 
                     $crud_edit_fields .= '<div class="col-12">
-                            <label class="" for="category_title">' . $column . '</label>
+                            <label class="" for="' . $column . '">' . $column . $required_field . '</label>
+                            <textarea type="text" class="form-control" id="' . $column . '" name="' . $column . '"
+                                   placeholder="' . $column . '" required="' . $required . '">{{$item->' . $column . '}}</textarea>
+                        </div>';
+                } else {
+                    $column_names = $column;
+                    $crud_create_fields .= '<div class="col-12">
+                          <label class="" for="' . $column . '">' . $column . $required_field . '</label>
                             <input type="text" class="form-control" id="' . $column . '" name="' . $column . '"
-                                   placeholder="' . $column . '" value="{{$item->' . $column . '}}" >
+                                   placeholder="' . $column . '" required="' . $required . '">
+                        </div>';
+
+                    $crud_edit_fields .= '<div class="col-12">
+                            <label class="" for="category_title">' . $column . $required_field . '</label>
+                            <input type="text" class="form-control" id="' . $column . '" name="' . $column . '"
+                                   placeholder="' . $column . '" value="{{$item->' . $column . '}}" required="' . $required . '">
                         </div>';
                 }
-
-
             }
             $create_file = File::get(resource_path('views/admin/' . $view_path . '/create.blade.php'));
             $create_file = str_replace("crud_route", "{{route('" . $route_path . ".store' )}}", $create_file);
@@ -260,25 +275,58 @@ class CrudController extends Controller
             File::put(resource_path('views/includes/admin/sidebar.blade.php'), $sidebar);
 
             // sleep(5);
+            //Update Controller if Exist
+            $controller = File::get(app_path('Http/Controllers/' . $model_name . 'Controller.php'));
 
-            //Update Controller
+            sleep(5);
+            $done = $this->updateControllerIfExist($controller, $view_path, $model_name, $column_names);
+
+            if ($done == 1) {
+                alert()->success('Success', 'Successfully Crud Created');
+                return back();
+            } else {
+                alert()->error('Failed', 'Failed to Create Crud');
+                return back();
+            }
+
             /*$controller = File::get(app_path('Http/Controllers/Admin/' . $model_name . 'Controller.php'));
             $controller = str_replace("view_path", $view_path, $controller);
             File::put(app_path('Http/Controllers/Admin/' . $model_name . 'Controller.php'), $controller);*/
-
-
-            alert()->success('Success', 'Successfully Crud Created');
-            return back();
-            /*  alert()->success('Success', 'Successfully Crud Created');
-              return back();*/
 
 
         } catch (\Exception $e) {
             alert()->error('Error', $e->getMessage());
             return back();
         }
+
+
     }
 
+    public function updateControllerIfExist($controller, $view_path, $model_name, $column_name)
+    {
+        if (!$controller) {
+            try {
+
+                sleep(5);
+                $this->updateControllerIfExist($controller, $view_path, $model_name, $column_name);
+            } catch (\Exception $exception) {
+                //Log::error('Error occurred while checking for PyController: ' . $exception->getMessage());
+                // handle error here
+
+                return $exception->getMessage();
+
+                return 0;
+            }
+        } else {
+
+            $controller = str_replace("view_path", $view_path, $controller);
+            $controller = str_replace("column", $column_name, $controller);
+            File::put(app_path('Http/Controllers/' . $model_name . 'Controller.php'), $controller);
+
+            return 1;
+        }
+
+    }
 
     public function crudDelete(Request $request)
     {

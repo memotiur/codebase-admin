@@ -10,6 +10,8 @@ use App\Http\Controllers\PageViewController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,10 +62,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 Route::get('/', [Controller::class, 'home']);
 Route::get('/mail', [Controller::class, 'mail']);
 Route::get('/qr-code', [Controller::class, 'qrCode']);
-
-
 Route::get('/import', [Controller::class, 'import']);
-
 
 Route::get('/post-details/{id}', [Controller::class, 'postDetails']);
 
@@ -77,7 +76,34 @@ Route::get('/clear', function () {
     return "Cleared!";
 });
 
+Route::get('/controller-check', function () {
+
+    $model_name = "PaymentLog";
+
+    if (!File::exists(app_path('Http/Controllers/' . $model_name . 'Controller.php'))) {
+
+        return "File Not Found";
+    } else {
+        return "File Found";
+    }
 
 
-Route::resource('/kitchens', \App\Http\Controllers\KitchenController::class);
-Route::resource('/kitchen-admins', \App\Http\Controllers\KitchenAdminController::class);
+    $model_name = "History";
+    /* while (!File::exists(app_path('Http/Controllers/' . $model_name . 'Controller.php'))) {
+         sleep(5);
+         echo "File Not Found";
+     }*/
+    echo "File Found";
+
+    return;
+
+
+    $model_name = "History";
+    $model_name = Str::plural($model_name);
+    $route_path = preg_replace("/[A-Z]/", "-\$0", $model_name);
+    return $route_path = substr(strtolower($route_path), 1);
+});
+
+Route::resource('/payment-logs', \App\Http\Controllers\PaymentLogController::class);
+
+Route::resource('/test-models', \App\Http\Controllers\TestModelController::class);

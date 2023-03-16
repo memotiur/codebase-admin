@@ -9,12 +9,18 @@ use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 
 class {{ class }} extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $results= {{ model }}::orderBy('id', 'DESC')->paginate(25);
+
+        $query= {{ model }}::orderBy('id', 'DESC');
+        if($request['search']!=null){
+            $query->where('column', 'like', '%'.$request['search'].'%');
+        }
+        $results= $query->paginate(25);
         return view('admin.view_path.index',compact('results'));
 
     }
