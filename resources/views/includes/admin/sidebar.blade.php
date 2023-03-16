@@ -65,16 +65,3 @@
         <span class="nav-main-link-name">Logout</span>
     </a>
 </li>
-
-<li class='nav-main-item'>
-    <a class='nav-main-link' href='/payment-logs'>
-        <i class='nav-main-link-icon fa fa-sticky-note'></i>
-        <span class='nav-main-link-name'>PaymentLog</span>
-    </a>
-</li>
-<li class='nav-main-item'>
-    <a class='nav-main-link' href='/payment-logs'>
-        <i class='nav-main-link-icon fa fa-sticky-note'></i>
-        <span class='nav-main-link-name'>PaymentLog</span>
-    </a>
-</li>
