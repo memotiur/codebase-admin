@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use ZipArchive;
 
 class CrudController extends Controller
@@ -333,85 +335,93 @@ class CrudController extends Controller
 
     }
 
+    public function downloadProject(Request $request)
+    {
+        // Get the path of the folder to zip
+        $folderPath = public_path('product_download');
+
+        // Create a new ZipArchive instance
+        $zip = new ZipArchive;
+
+        // Set the path of the zip file to be created
+        $zipFilePath = public_path('product_download/motiur.zip');
+
+        // Open the zip file for writing
+        if ($zip->open($zipFilePath, ZipArchive::CREATE) === true) {
+            // Add all the files in the folder to the zip file
+            $files = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($folderPath),
+                RecursiveIteratorIterator::LEAVES_ONLY
+            );
+            foreach ($files as $file) {
+                if (!$file->isDir()) {
+                    $filePath = $file->getRealPath();
+                    $relativePath = substr($filePath, strlen($folderPath) + 1);
+                    $zip->addFile($filePath, $relativePath);
+                }
+            }
+
+            // Close the zip file
+            $zip->close();
+
+            // Download the zip file
+            return response()->download($zipFilePath)->deleteFileAfterSend(true);
+        } else {
+            // If zip file creation failed, return an error message
+            return response()->json(['message' => 'Failed to create zip file'], 500);
+        }
+
+    }
+
     public function projectClone(Request $request)
     {
-        //Resources copy
-        $to_directory = public_path("product_download/resources");
-        $from_directory = resource_path();
-        File::copyDirectory($from_directory, $to_directory);
-
-        //Routes copy
-        $to_directory = public_path("product_download/routes");
-        $from_directory = base_path("routes");
-        File::copyDirectory($from_directory, $to_directory);
-
-        //Controllers copy
-        $to_directory = public_path("product_download/app/Http/Controllers");
-        $from_directory = app_path("Http/Controllers");
-        File::copyDirectory($from_directory, $to_directory);
-
-        //Models copy
+        //Copy app folder
         $to_directory = public_path("product_download/app");
         $from_directory = app_path();
         File::copyDirectory($from_directory, $to_directory);
 
-        //Views copy
-        $to_directory = public_path("product_download/resources/views");
-        $from_directory = resource_path("views");
+        //Copy Bootstrap Folder
+        $to_directory = public_path("product_download/bootstrap");
+        $from_directory = base_path("bootstrap");
         File::copyDirectory($from_directory, $to_directory);
 
-        //Migrations copy
-        $to_directory = public_path("product_download/database/migrations");
-        $from_directory = database_path("migrations");
-        File::copyDirectory($from_directory, $to_directory);
-
-        //Env copy
-        $to_directory = public_path("product_download");
-        $from_directory = base_path();
-        File::copyDirectory($from_directory, $to_directory);
-
-        //Config copy
+        //Copy config folder
         $to_directory = public_path("product_download/config");
         $from_directory = config_path();
         File::copyDirectory($from_directory, $to_directory);
 
-        //Public copy
-        /*  $to_directory = public_path("product_download/public");
-          $from_directory = public_path();
-          File::copyDirectory($from_directory, $to_directory);*/
+        //copy database folder
+        $to_directory = public_path("product_download/database");
+        $from_directory = database_path();
+        File::copyDirectory($from_directory, $to_directory);
 
-        //Storage copy
+        //copy lang folder
+        $to_directory = public_path("product_download/lang");
+        $from_directory = resource_path("lang");
+        File::copyDirectory($from_directory, $to_directory);
+
+        //Copy resources folder
+        $to_directory = public_path("product_download/resources");
+        $from_directory = resource_path();
+        File::copyDirectory($from_directory, $to_directory);
+
+        //Copy Routes folder
+        $to_directory = public_path("product_download/routes");
+        $from_directory = base_path("routes");
+        File::copyDirectory($from_directory, $to_directory);
+
+        //Copy Storage folder
         $to_directory = public_path("product_download/storage");
         $from_directory = storage_path();
         File::copyDirectory($from_directory, $to_directory);
 
-        //Vendor copy
-        $to_directory = public_path("product_download/vendor");
-        $from_directory = base_path("vendor");
+        //Copy tests folder
+        $to_directory = public_path("product_download/tests");
+        $from_directory = base_path("tests");
         File::copyDirectory($from_directory, $to_directory);
 
-
-        return "Done";
-
-
-        //Zip file create
-        $zip = new ZipArchive;
-
-        $fileName = 'example.zip';
-
-        if ($zip->open(public_path($fileName), ZipArchive::CREATE) === TRUE) {
-            $files = File::files(public_path('product_download'));
-
-            foreach ($files as $key => $value) {
-                $file = basename($value);
-                $zip->addFile($value, $file);
-            }
-
-            $zip->close();
-        }
-
-        return response()->download(public_path($fileName));
-
+        //Composer update Vendor File
+        //Copy .env, etc file
 
         return "done";
     }

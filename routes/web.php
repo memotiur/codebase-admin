@@ -11,7 +11,6 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +45,7 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::get('/crud-delete', [CrudController::class, 'crudDelete']);
     Route::get('/project-clone', [CrudController::class, 'projectClone']);
+    Route::get('/download-project', [CrudController::class, 'downloadProject']);
 
 
     Route::get('/profile', [AdminController::class, 'profile']);
@@ -104,7 +104,4 @@ Route::get('/controller-check', function () {
     return $route_path = substr(strtolower($route_path), 1);
 });
 
-Route::resource('/payment-logs', \App\Http\Controllers\PaymentLogController::class);
 
-Route::resource('/test-models', \App\Http\Controllers\TestModelController::class);
-Route::resource('/farmers', \App\Http\Controllers\FarmerController::class);
