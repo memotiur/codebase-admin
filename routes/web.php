@@ -105,3 +105,5 @@ Route::get('/controller-check', function () {
 });
 
 
+
+Route::resource('/subscribers', \App\Http\Controllers\SubscriberController::class);

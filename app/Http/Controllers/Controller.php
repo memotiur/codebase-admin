@@ -24,41 +24,6 @@ class Controller extends BaseController
 
     public function home(Request $request)
     {
-
-        $page_views = PageVisitor::where('ip_address', $request->ip())->first();
-        if (is_null($page_views)) {
-            try {
-
-                $url = "http://api.ipapi.com/" . $request->ip() . "?access_key=" . getIpAddressApikey();
-                //http request
-                $response = Http::get($url);
-                //$data= json_decode($response->body());
-
-                PageVisitor::create([
-                    'ip_address' => $request->ip(),
-                    'details' => $response->body(),
-                ]);
-
-                PageView::create([
-                    'ip_address' => $request->ip(),
-                    'details' => $response->body(),
-                ]);
-
-            } catch (\Exception $e) {
-
-                //return $e->getMessage();
-            }
-        } else {
-            try {
-                PageView::create([
-                    'ip_address' => $request->ip(),
-                    'details' => $page_views->details,
-                ]);
-            } catch (\Exception $e) {
-                //return $e->getMessage();
-            }
-        }
-
         return view("frontend.home.index");
     }
 

@@ -2,32 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Farmer;
+use App\Models\Subscriber;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Intervention\Image\Facades\Image;
-use RealRashid\SweetAlert\Facades\Alert;
 
-class FarmerController extends Controller
+class SubscriberController extends Controller
 {
     public function index(Request $request)
     {
 
-        $query= Farmer::orderBy('id', 'DESC');
+        $query= Subscriber::orderBy('id', 'DESC');
         if($request['search']!=null){
-            $query->where('password', 'like', '%'.$request['search'].'%');
+            $query->where('is_deleted', 'like', '%'.$request['search'].'%');
         }
         $results= $query->paginate(25);
-        return view('admin.farmer.index',compact('results'));
+        return view('admin.subscriber.index',compact('results'));
 
     }
 
 
     public function create()
     {
-        return view('admin.farmer.create');
+        return view('admin.subscriber.create');
     }
 
 
@@ -58,8 +59,8 @@ class FarmerController extends Controller
 
         try{
             $data = $request->except('_token', '_method', 'image');
-            Farmer::create($data);
-            Alert::success("Success", getErrorMessage("Farmer", "created"));
+            Subscriber::create($data);
+            Alert::success("Success", getErrorMessage("Subscriber", "created"));
             return back();
         }catch(\Exception $exception){
             Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));
@@ -69,18 +70,18 @@ class FarmerController extends Controller
     }
 
 
-    public function show(Farmer $farmer)
+    public function show(Subscriber $subscriber)
     {
-        return view('admin.farmer.show',compact('farmer'));
+        return view('admin.subscriber.show',compact('subscriber'));
     }
 
 
-    public function edit(Farmer $farmer)
+    public function edit(Subscriber $subscriber)
     {
-        return view('admin.farmer.edit',compact('farmer'));
+        return view('admin.subscriber.edit',compact('subscriber'));
     }
 
-    public function update(Request $request, Farmer $farmer)
+    public function update(Request $request, Subscriber $subscriber)
     {
          if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -99,8 +100,8 @@ class FarmerController extends Controller
 
         try{
             $data = $request->except('_token', '_method', 'image');
-            $farmer->update($data);
-            Alert::success("Success", getErrorMessage("Farmer", "updated"));
+            $subscriber->update($data);
+            Alert::success("Success", getErrorMessage("Subscriber", "updated"));
             return back();
         }catch(\Exception $exception){
             Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));
@@ -110,11 +111,11 @@ class FarmerController extends Controller
     }
 
 
-    public function destroy(Farmer $farmer)
+    public function destroy(Subscriber $subscriber)
     {
         try{
-            $farmer->delete();
-            Alert::success("Success", getErrorMessage("Farmer", "deleted"));
+            $subscriber->delete();
+            Alert::success("Success", getErrorMessage("Subscriber", "deleted"));
             return back();
         }catch(\Exception $exception){
             Alert::error("Error", getErrorMessage($exception->getMessage(), "There is an Error. Try again Later"));
